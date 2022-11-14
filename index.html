@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Personality quiz</title>
+        <style>
+            body {
+                background-color:lightgrey;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+            }
+            
+        
+           .btn-grid {
+              display: grid;
+               grid-template-columns: repeat(2,auto);
+               column-gap: 10px;
+               margin: 20px 0;
+            }
+               
+               
+            .btn {
+               background-color: skyblue; 
+               border: none;
+                border-radius: 5px;
+               color: white;
+               padding: 15px 32px;
+                outline: none;
+               text-align: center;
+               text-decoration: none;
+               display: inline-block;
+               font-size: 30px;
+}
+            button:hover {
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+            
+            .container{
+                background-color: blue;
+                height: 800px;
+                max-width: 80%;
+                margin: 50px;
+                text-align: center;
+                border-radius: 5px;
+                box-shadow: 0 0 10px 2px;
+                
+            }
+            .start-button,
+            .next-button{
+                font-size: 1.5rem;
+                font-weight: bold;
+                padding: 10px 20px;
+                
+            }
+            .controls{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+            }
+            .hide{
+                display: none;
+            }
+            
+            
+            
+
+        </style>
+    </head>
+    <body>
+ <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
+      </script>
+        
+       
+        
+        <div class="container">
+            <div id="questoin-conttainer" class="hide">
+                <div id="answer-button" class="btn-grip">
+                    <p>
+                        <button class="btn">Answer 1</button>
+                        <button class="btn"> Answer 2</button>
+                        <button class="btn">Answer3</button>
+                        <button class="btn"> Answer 4</button>
+
+                    </p>
+                </div>
+             </div>
+        <div class="controls">
+            <button id="start-btn" class="start-btn btn">Start</button>
+            <button id="next-btn" class="start-btn btn hide">Next</button></div>
+            </div>
+        <div class="score">
+            <span id="right-answer"></span> 
+        
+    </div>
+            
+<script>
+    
+    const startButton = document.getElementById('start-btn')
+    const nextButton = document.getElementById('next-btn')
+    
+    const questionContainer = document.getElementById('question-container')
+    const questionelement = document.getElementById('question')
+
+    let shuffledQuestions,currentQuestionindex;
+    let quizScore=0;
+    
+    function selectAnswer(e){
+        const selectedButton=e.target
+        const correct=selectedButton.dataset.correct
+        
+        setstatusClass(document.body,correct)
+        Array.from(answerButtonElement.children).forEach((button)=>{
+            setStatusClass(button,button.dataset.correct)
+        })
+        if(shuffledQuestions.length > currentQuestionindex +1){
+            nextButton.classList.remove("hide")
+            
+        }else{
+            startButton.innerText="restart"
+            startButton.classList.remove("hide")
+            
+        }
+        if(selectedButton.dataset = correct){
+            quizScore++
+        }
+        document.getElementById('right-answer').innerText=quizScore
+    }
+    
+    
+    
+    function setStatusClass(element,correct){
+        clearStatusClass(element)
+        if(correct){
+            element.classList.add("correct")
+        }
+    
+        
+    function clearStatusClass(element){
+        element.classList.remove('correct')
+    }
+    
+        const questions =[
+           {
+            questions: 'What type of movie do you like most?',
+            answer :[
+            {text: 'Romantic',correct: 1},
+            {text: 'Psychological',correct: 2 },
+            {text: 'Adventure', correct: 3},
+            {text: 'Comedy',correct: 4}
+            ],
+        },
+
+           {
+            questions: 'What type of movie do you like most?',
+            answer :[
+            {text: 'Romantic',correct: 1},
+            {text: 'Psychological',correct: 2 },
+            {text: 'Adventure', correct: 3},
+            {text: 'Comedy',correct : 4}
+            ],
+        },
+        
+    
+           {
+            questions: 'Type of Shows you watch?',
+            answer :[
+            {text: 'Drama',correct: 1},
+            {text: 'Action/Adventure',correct: 2 },
+            {text: 'Mystery', correct: 3},
+            {text: 'Fighting',correct: 4}
+            ],
+        },
+        ]
+    
+    
+    startButton.addEventListener('click',startgame)
+        nextButton.addEventListener('click',()=>{
+            currentQuestionindex++
+            setnextquestion()
+        })
+    
+
+    function startgame(){
+        startButton.classList.add('hide')
+        shuffledQuestions=questions.sort(()=>math.random()-0.5)
+        currentQuestionindex=0;
+        questionContainerElement.classList.remove('hide')
+        setnextquestion()
+        quizScore=0
+    }
+    
+    
+    
+    
+    
+   
+    
+    
+    
+    
+   function setnextquestion(){
+       resetState();
+       showQuestion(shuffledQuestions[currentQuestionindex])
+      
+   }
+    
+    
+    
+    
+    
+    
+    function showQuestion(question){
+        questionelement.innerText= question.questions;
+        question.answer.forEach((answer)=>{
+            const button = document.createElement('button')
+            button.innerText= answer.text
+            button.classList.add('btn')
+            if(answer.correct){
+                button.dataset.correct =answer.correct
+            }
+            button.addEventListener('clcik',selectAnswer)
+            answerButtonElement.appendChild(button)
+        })
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    function resetstate(){
+        clearStatusClass(documnent.body)
+        nextButton.classlist.add('hide')
+        while(answerButtonElement.firstChild){
+        answerButtonElement.removeChild(answerButtonElement.firstChild)
+        }
+    }
+    
+    
+    
+    
+    
+    
+        function slectAnswer(e){
+            const selectedButton=e.target
+            const correct =selectedButton.dataset.correct
+            
+            setstatusClass(Document, body, correct)
+            Array.from(answerButtonElement).forEach((button)=>{
+            setstatusClass(button,button.dataset.correct)
+            })
+             if(startButton.dataset = correct){
+                quizScore++
+             }
+                 document.getElementById('right-answer').innerText=quizScore
+        
+
+    
+    
+    
+    
+    
+    
+     
+            
+    
+    
+    
+    
+    
+    
+           
+           
+            
+            
+            </script>
+
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+     
+        
+        
+        
+        
+       
+        
+    </body>
+</html>
